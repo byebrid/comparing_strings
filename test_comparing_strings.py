@@ -14,6 +14,11 @@ class TestComparingStrings(unittest.TestCase):
         self.assertTrue(cs.are_similar("abdec", "ABC", max_edit_dist=2))
         self.assertTrue(cs.are_similar("123", 123))
 
+    def test_longest_subsequence(self):
+        self.assertEqual(cs.longest_subsequence("ABAZDC", "BACBAD"), "ABAD")
+        self.assertEqual(cs.longest_subsequence("AGGTAB", "GXTAYB"), "GTAB")
+        self.assertEqual(cs.longest_subsequence("aaaa", "aa"), "aa")
+
 
 if __name__ == '__main__':
     unittest.main()

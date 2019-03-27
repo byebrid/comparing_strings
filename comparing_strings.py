@@ -1,4 +1,5 @@
 """comparing_strings.py"""
+from itertools import combinations
 
 
 def are_similar(s1, s2, max_edit_dist=1):
@@ -81,3 +82,33 @@ def are_similar(s1, s2, max_edit_dist=1):
 
     last_required_edits = len(s2) - len(s1)
     return last_required_edits <= remaining_edits and remaining_edits >= 0
+
+
+
+def longest_subsequence(s1, s2):
+    '''
+    Returns the longest common subsequence of s1 and s2.
+
+    Examples:
+    "ABAZDC", "BACBAD" => "ABAD"
+    "AGGTAB", "GXTAYB" => "GTAB"
+    "aaaa", "aa" => "aa"
+    '''
+    # Swap if s1 is shorter than s2 for simplicity
+    s1, s2 = (s2, s1) if len(s2) > len(s1) else (s1, s2)
+
+    # Get all possible combinations of letters in str
+    def get_substrs(str):
+        substrs = []
+        for i in range(1, len(str) + 1):
+            combos = combinations(str, i)
+            combos = list(map(lambda x: ''.join(x), combos))
+            substrs.extend(combos)
+        return set(substrs)
+
+    substrs1 = get_substrs(s1)
+    substrs2 = get_substrs(s2)
+
+    shared_substrs = substrs1.intersection(substrs2)
+    max_length, longest_substr = max([(len(x), x) for x in shared_substrs])
+    return longest_substr
